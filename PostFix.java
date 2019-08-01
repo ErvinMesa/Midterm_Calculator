@@ -3,19 +3,21 @@ package Calculator;
 public class PostFix {
     Stack<String> values = new Stack<>();
     public String convertEquation(String eq){
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder(), temp = new StringBuilder();
         for(int i = 0;i<eq.length();i++){
             String c = Character.toString(eq.charAt(i));
-            if("+-*/".contains(c)){
-                if("*/".contains(c)) {
-                    values.push(c);
-                }
-                else {
-                    if(values.size > 0 && "*/".contains(values.peek())){
-                        result.append(values.pop());
+            if("+-*/^".contains(c)){
+                result.append(temp+" ");
+                temp.delete(0,temp.length());
+                if(!values.stackEmpty()) {
+                    if("^".contains(values.peek())){
+                        result.append(values.pop() + " ");
                     }
-                    values.push(c);
+                    else if ("*/".contains(values.peek()) && !"^".contains(c)){
+                        result.append(values.pop() + " ");
+                    }
                 }
+                values.push(c);
             }
             else if("()".contains(c)){
                 if(c.equals("(")){
@@ -30,11 +32,12 @@ public class PostFix {
                 }
             }
             else{
-                result.append(c);
+                temp.append(c);
             }
         }
-        while(values.size > 0){
-            result.append(values.pop());
+        result.append(temp+" ");
+        while(values.hasNext()){
+            result.append(values.pop()+" ");
         }
         return result.toString();
     }

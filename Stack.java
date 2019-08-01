@@ -2,34 +2,41 @@ package Calculator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Stack <T>{
-    ArrayList<T> data = new ArrayList();
+    private ArrayList<T> data = new ArrayList();
+    private Stack_Data<T> top = null;
     int size = 0;
     public Stack(T[] data){
         for(T item: data){
-            this.data.add(item);
+            top = new Stack_Data<T>(item,top);
         }
         size = data.length;
     }
-    public Stack(){
-
+    public Stack(T data){
+        top = new Stack_Data<T>(data);
+        size = 1;
     }
+    public Stack(){}
     public void push(T item){
-        data.add(item);
+        top = new Stack_Data<T>(item,top);
         size++;
     }
-    public T pop(){
-        T item = data.get(size-1);
-        data.remove(size-1);
+    public T pop() {
         size--;
-        return item;
+        T temp = top.getData();
+        top = top.next;
+        return temp;
     }
     public T peek(){
-        if (data.size() > 0)
-            return data.get(size-1);
-        else
-            return null;
+        return top.getData();
+    }
+    public boolean stackEmpty(){
+        return (size == 0);
+    }
+    public boolean hasNext(){
+        return top != null;
     }
     public int size(){
         return size;
