@@ -15,8 +15,11 @@ public class PostFix {
                     if("^".contains(values.peek())){
                         result.append(values.pop() + " ");
                     }
-                    else if ("*/".contains(values.peek()) && !"^".contains(c)){
+                    if ("*/".contains(values.peek()) && !"^".contains(c)){
                         result.append(values.pop() + " ");
+                    }
+                    if("+-".contains(values.peek()) && "+-".contains(c)){
+                        result.append(values.pop()+" ");
                     }
                 }
                 values.push(c);
@@ -26,8 +29,10 @@ public class PostFix {
                     values.push(c);
                 }
                 else{
-                    result.append(temp+" ");
-                    temp.delete(0,temp.length());
+                    if(temp.length() > 0) {
+                        result.append(temp + " ");
+                        temp.delete(0, temp.length());
+                    }
                     String letter = "";
                     while(!letter.equals("(")){
                         if(!letter.isEmpty())
