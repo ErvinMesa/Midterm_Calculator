@@ -44,4 +44,28 @@ public class Stack <T>{
     public String toString(){
         return Arrays.asList(data).toString();
     }
+
+    private class Stack_Data <T>{
+        T data;
+        Stack_Data next;
+        private Stack_Data(T data, Stack_Data next){
+            this.data = data;
+            this.next = next;
+        }
+        private Stack_Data(T data){
+            this(data,null);
+        }
+        private Stack_Data(){
+            this(null);
+        }
+        private Stack_Data getNext(){
+            return next;
+        }
+        private T getData(){
+            return data;
+        }
+    }
+
+
+
 }
