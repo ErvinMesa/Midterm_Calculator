@@ -7,8 +7,10 @@ public class PostFix {
         for(int i = 0;i<eq.length();i++){
             String c = Character.toString(eq.charAt(i));
             if("+-*/^".contains(c)){
-                result.append(temp+" ");
-                temp.delete(0,temp.length());
+                if(temp.length() > 0) {
+                    result.append(temp + " ");
+                    temp.delete(0, temp.length());
+                }
                 if(!values.stackEmpty()) {
                     if("^".contains(values.peek())){
                         result.append(values.pop() + " ");
@@ -24,9 +26,12 @@ public class PostFix {
                     values.push(c);
                 }
                 else{
+                    result.append(temp+" ");
+                    temp.delete(0,temp.length());
                     String letter = "";
                     while(!letter.equals("(")){
-                        result.append(letter);
+                        if(!letter.isEmpty())
+                            result.append(letter+" ");
                         letter = values.pop();
                     }
                 }
