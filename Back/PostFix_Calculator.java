@@ -1,10 +1,12 @@
 package Back;
 
+import java.text.DecimalFormat;
 import java.util.StringTokenizer;
 
 public class PostFix_Calculator {
     private Stack<Double> stack = new Stack();
     private StringTokenizer tokenizer;
+    private DecimalFormat format = new DecimalFormat("#.00");
     public PostFix_Calculator(){}
     public double solve(String eq){
         tokenizer = new StringTokenizer(eq);
@@ -17,7 +19,7 @@ public class PostFix_Calculator {
                 stack.push(Double.parseDouble(val));
             }
         }
-        return stack.pop();
+        return Double.parseDouble(format.format(stack.pop()));
     }
     public String showProcess(String eq){
         StringBuilder process = new StringBuilder();
@@ -28,7 +30,7 @@ public class PostFix_Calculator {
                 double num1 = stack.pop();
                 double num2 = stack.pop();
                 stack.push(evaluate(num1,num2,val));
-                process.append(num2+" "+val+" "+num1+" = "+stack.peek()+"|");
+                process.append(format.format(num2)+" "+val+" "+format.format(num1)+" = "+format.format(stack.peek())+"|");
             }
             else{
                 stack.push(Double.parseDouble(val));
