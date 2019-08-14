@@ -36,6 +36,7 @@ public class PostFix_Calculator {
                 stack.push(Double.parseDouble(val));
             }
         }
+        process.append("Result: \n"+format.format(stack.pop()));
         return process.toString();
     }
     public double evaluate(double a, double b,String operator){

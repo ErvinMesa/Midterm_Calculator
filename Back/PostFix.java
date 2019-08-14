@@ -4,10 +4,16 @@ public class PostFix {
     Stack<String> values = new Stack<>();
     public String convertEquation(String eq){
         StringBuilder result = new StringBuilder(), temp = new StringBuilder();
+        boolean prevIsOperator = false;
         for(int i = 0;i<eq.length();i++){
             String c = Character.toString(eq.charAt(i));
             try {
                 if ("+-*/^".contains(c)) {
+                    if(c.equals("-") && prevIsOperator || i == 0){
+                        temp.append("-");
+                        prevIsOperator = false;
+                        continue;
+                    }
                     if (temp.length() > 0) {
                         result.append(temp + " ");
                         temp.delete(0, temp.length());
@@ -24,6 +30,7 @@ public class PostFix {
                         }
                     }
                     values.push(c);
+                    prevIsOperator = true;
                 } else if ("()".contains(c)) {
                     if (c.equals("(")) {
                         values.push(c);
@@ -39,9 +46,11 @@ public class PostFix {
                             letter = values.pop();
                         }
                     }
+                    prevIsOperator = false;
                 } else if (c.equals(" ")) {
                 } else {
                     temp.append(c);
+                    prevIsOperator = false;
                 }
             }
             catch (NullPointerException e){
