@@ -39,7 +39,6 @@ public class FinalUIController {
         while (tokenizer.hasMoreTokens()) {
             process.appendText(tokenizer.nextToken()+"\n");
         }
-        process.appendText(Double.toString(calculator.solve(postfix)));
 
     }
 
